@@ -1,4 +1,4 @@
-#Paypal Button Client Integration
+# Paypal Button Client Integration
 
 ## Description
 This is a client integration implementation of the paypal button. A sample integration where a user buys a book through paypal
