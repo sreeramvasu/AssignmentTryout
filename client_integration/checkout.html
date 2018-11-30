@@ -1,0 +1,103 @@
+<!-- client side integration of paypal button using Paypal routines-->
+<html>
+<head>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+body{
+  background: #EEE;
+}
+body, input{
+  font-family: "Open Sans", sans-serif;
+  font-size: 1em;
+}
+h1{
+  font-family: "Open Sans", sans-serif;
+}
+.item{
+  width: 60px;
+  vertical-align: middle;
+  margin-right: 15px;
+}
+.button:hover{
+  background: #33B5E5;
+}
+.checkout{
+  margin: 0 auto;
+  width: 350px;
+}
+.addr input{
+  width: 100%;
+  outline: none;
+  border: 0px solid;
+  padding: 5px;
+}
+#button{
+  padding: 4px;
+  color: black;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px 5px;
+}
+</style>
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+</head>
+<body>
+ <div class="checkout">
+  <h1>Checkout</h1>
+  <p>You are about to buy:</p>
+  <p><img class="item" title="Image of Cover" src="https://i.imgur.com/knxv5oN.jpg" />The PayPal Wars for $65.00</p>
+  <p>Ship to:</p>
+   <div class="addr">
+    <p>5 Temasek Boulevard<br/>
+    #09-01 Suntec Tower Five<br/>
+    038985<br/>
+    Singapore</p>
+   </div>
+   <div id="button"> </div>   
+  </div>
+  <script>
+      paypal.Button.render({
+        env: 'sandbox',
+        client: {
+          sandbox: 'AaNponrDq6jygBDh5pf6x_TIpqdLp_06juKN8TQtNrgLPMvvjJ-OQMYaqtaVA_Y6SquR1jW4V52MoUr5',
+        },
+        // Customize button (optional)
+        locale: 'en_US',
+        style: {
+          size: 'small',
+          color: 'gold',
+          shape: 'pill',
+        },
+    
+        // Enable Pay Now checkout flow (optional)
+        //commit: true,
+    
+        // Set up a payment
+        payment: function(data, actions) {
+          return actions.payment.create({
+            transactions: [{
+              amount: {
+                total: '65.00',
+                currency: 'USD'
+              }
+            }]
+          });
+        },
+        // Execute the payment
+        onAuthorize: function(data, actions) {
+          return actions.payment.execute().then(function(result) {
+            // Show a confirmation message to the buyer - we dont do redirect in client side, instead we do set the inner html
+            // Refer: "Note" section of https://developer.paypal.com/docs/checkout/how-to/customize-flow/#show-a-confirmation-page 
+            document.querySelector('.checkout')
+            .innerHTML = `<h1>Checkout Completed</h1>
+                          <p>You are about to buy:</p>
+                          <p><img class="item" title="Image of Cover" src="https://i.imgur.com/knxv5oN.jpg" />The PayPal Wars for $65.00</p>
+                          <p>Order placed successfully, PayPal Transaction ID: <b>${result.id}</b></p>`;
+          });
+        }
+      }, '#button');   
+    </script>
+</body>
+</html>
