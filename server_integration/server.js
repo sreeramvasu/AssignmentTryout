@@ -108,6 +108,8 @@ var app = express();
     res.sendFile(path.join(__dirname+'/checkout.html'));
   }).get('/complete', (req,res) => {
     res.sendFile(path.join(__dirname+'/complete.html'));
+  }).get('/clientcheckout', (req,res) => {
+    res.sendFile(path.join(__dirname+'/clientcheckout.html'));
   }).listen(3000, function()
   {
     console.log('Server listening at http://localhost:3000/');
