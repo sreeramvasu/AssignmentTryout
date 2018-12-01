@@ -57,9 +57,7 @@ h1{
    <div id="button"></div>
 </div>
 <script>
-
-  let paymentId;
-  paypal.Button.render({
+    paypal.Button.render({
     env: 'sandbox', // Or 'production'
     // Set up the payment:
     // 1. Add a payment callback
@@ -68,7 +66,6 @@ h1{
       return actions.request.post('/my-api/create-payment/')
         .then(function(res) {
           // 3. Return res.id from the response
-          paymentId = res.id;
           return res.id;
         });
     },
@@ -76,12 +73,20 @@ h1{
     // 1. Add an onAuthorize callback
     onAuthorize: function(data, actions) {
       // 2. Make a request to your server
-      return actions.request.post('/my-api/execute-payment/', {
+
+      // console.log(`payerID: ${data.payerID}`);
+      // console.log(`paymentID: ${data.paymentID}`);
+
+      // NOTE: passing the paymentID and payerID as query parameter since the paypal execute post action 
+      // is not capturing the body - could be a bug
+
+      return actions.request.post(`/my-api/execute-payment?paymentID=${data.paymentID}&payerID=${data.payerID}`, {
         paymentID: data.paymentID,
         payerID:   data.payerID
       })
         .then(function(res) {
-          // 3. Show the buyer a confirmation message.
+          // 3. Show the buyer a confirmation message
+          window.location.href = `/complete?paymentId=${res.id}`;
         });
     }
   }, '#button');

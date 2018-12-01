@@ -39,7 +39,7 @@ var app = express();
         }],
         redirect_urls:
         {
-          return_url: 'http://localhost:3000/my-api/execute-payment',
+          return_url: 'http://localhost:3000/complete',
           cancel_url: 'http://localhost:3000'
         }
       },
@@ -63,8 +63,8 @@ var app = express();
   .post('/my-api/execute-payment/', function(req, res)
   {
     // 2. Get the payment ID and the payer ID from the request body.
-    var paymentID = req.body.paymentID;
-    var payerID = req.body.payerID;
+    var paymentID = req.query.paymentID;
+    var payerID = req.query.payerID;
     // 3. Call /v1/payments/payment/PAY-XXX/execute to finalize the payment.
     request.post(PAYPAL_API + '/v1/payments/payment/' + paymentID +
       '/execute',
@@ -98,13 +98,16 @@ var app = express();
         // 4. Return a success response to the client
         res.json(
         {
-          status: 'success'
+          status: 'success',
+          id: response.body.id
         });
       });
   })
   // Displaying the checkout page at the start
   .get('/', (req,res) => {
     res.sendFile(path.join(__dirname+'/checkout.html'));
+  }).get('/complete', (req,res) => {
+    res.sendFile(path.join(__dirname+'/complete.html'));
   }).listen(3000, function()
   {
     console.log('Server listening at http://localhost:3000/');
