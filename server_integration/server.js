@@ -33,7 +33,7 @@ var app = express();
         {
           amount:
           {
-            total: '0.01',
+            total: '65.00',
             currency: 'USD'
           }
         }],
@@ -81,7 +81,7 @@ var app = express();
           {
             amount:
             {
-              total: '0.01',
+              total: '65.00',
               currency: 'USD'
             }
           }]
