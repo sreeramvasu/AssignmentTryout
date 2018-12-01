@@ -9,7 +9,7 @@ var SECRET = 'EFgYuGqmJlcL9lYjLUYYJs3kZdz70eUv96KExzZJjUHzCSgdLvPyyV1AnU0U_1kUub
 var PAYPAL_API = 'https://api.sandbox.paypal.com';
 
 var app = express();
-
+const PORT = process.env.PORT || 3000;
   // Set up the payment:
   // 1. Set up a URL to handle requests from the PayPal button
   app.post('/my-api/create-payment/', function(req, res)
@@ -110,8 +110,8 @@ var app = express();
     res.sendFile(path.join(__dirname+'/complete.html'));
   }).get('/clientcheckout', (req,res) => {
     res.sendFile(path.join(__dirname+'/clientcheckout.html'));
-  }).listen(3000, function()
+  }).listen(PORT, function()
   {
-    console.log('Server listening at http://localhost:3000/');
+    console.log(`Server listening at ${PORT}`);
   });
 // Run `node ./server.js` in your terminal
