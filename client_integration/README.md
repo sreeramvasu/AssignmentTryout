@@ -11,3 +11,6 @@ This is a client integration implementation of the paypal button. A sample integ
 - Run the `checkout.html` in the browser
 - Use the buyer credentials to buy the book - **sreeram.vasudevan-buyer@gmail.com**
 - Try a checkout with Paypal.
+
+## Contact Me
+Sreeram Vasudevan <sreeram.vasudevan@gmail.com>
