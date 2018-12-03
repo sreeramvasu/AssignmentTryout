@@ -94,7 +94,7 @@ h1{
             .innerHTML = `<h1>Checkout Completed</h1>
                           <p>You are about to buy:</p>
                           <p><img class="item" title="Image of Cover" src="https://i.imgur.com/knxv5oN.jpg" />The PayPal Wars for $65.00</p>
-                          <p>Order placed successfully, PayPal Transaction ID: <b>${result.id}</b></p>`;
+                          <p>Order placed successfully, PayPal Transaction ID: <b>${result.transactions[0].related_resources[0].sale.id}</b></p>`;
           });
         }
       }, '#button');   
