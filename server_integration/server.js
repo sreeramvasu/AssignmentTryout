@@ -99,7 +99,10 @@ const PORT = process.env.PORT || 3000;
         res.json(
         {
           status: 'success',
-          id: response.body.id
+          //NOTE: return the transaction ID instead of the payment ID
+          //NOTE: a potential bug in the documentation - https://developer.paypal.com/docs/paypal-plus/germany/integrate/execute-payment/#
+          // 'order' element does not come in the API response, instead it is sale
+          id: response.body.transactions[0].related_resources[0].sale.id
         });
       });
   })
