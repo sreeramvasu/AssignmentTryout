@@ -45,7 +45,7 @@ h1{
 <script>
   function load(){
     var url = new URL(document.URL);
-    var paymentId = url.searchParams.get('paymentId');
+    var paymentId = url.searchParams.get('transactionID');
     document.getElementById('paymentId').innerHTML = `<b>${paymentId}</b>`;
     //$("#payId").text = c; 
   }

@@ -86,7 +86,7 @@ h1{
       })
         .then(function(res) {
           // 3. Show the buyer a confirmation message
-          window.location.href = `/complete?paymentId=${res.id}`;
+          window.location.href = `/complete?transactionID=${res.id}`;
         });
     }
   }, '#button');
