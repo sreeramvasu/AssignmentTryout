@@ -34,7 +34,15 @@ const PORT = process.env.PORT || 3000;
           amount:
           {
             total: '65.00',
-            currency: 'USD'
+            currency: 'USD',
+            details: {
+              subtotal: '64.00',
+              tax: '0.20',
+              shipping: '0.50',
+              handling_fee: '1.00',
+              shipping_discount: '-1.00',
+              insurance: '0.30'
+            }
           }
         }],
         redirect_urls:
