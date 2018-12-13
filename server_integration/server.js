@@ -2,6 +2,7 @@
 
 var express = require('express');
 var request = require('request');
+var bodyParser = require('body-parser');
 var path = require('path');
 
 var CLIENT = 'AaNponrDq6jygBDh5pf6x_TIpqdLp_06juKN8TQtNrgLPMvvjJ-OQMYaqtaVA_Y6SquR1jW4V52MoUr5';
@@ -10,6 +11,10 @@ var PAYPAL_API = 'https://api.sandbox.paypal.com';
 
 var app = express();
 const PORT = process.env.PORT || 3000;
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+    extended: true
+  }));
   // Set up the payment:
   // 1. Set up a URL to handle requests from the PayPal button
   app.post('/my-api/create-payment/', function(req, res)
@@ -71,8 +76,8 @@ const PORT = process.env.PORT || 3000;
   .post('/my-api/execute-payment/', function(req, res)
   {
     // 2. Get the payment ID and the payer ID from the request body.
-    var paymentID = req.query.paymentID;
-    var payerID = req.query.payerID;
+    var paymentID = req.body.paymentID;
+    var payerID = req.body.payerID;
     // 3. Call /v1/payments/payment/PAY-XXX/execute to finalize the payment.
     request.post(PAYPAL_API + '/v1/payments/payment/' + paymentID +
       '/execute',

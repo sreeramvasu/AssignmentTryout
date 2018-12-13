@@ -14,7 +14,8 @@
   ],
   "dependencies": {
     "express": "^4.16.4",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "body-parser": "1.18.3"
   },
   "author": "sreeramvasu",
   "license": "ISC"

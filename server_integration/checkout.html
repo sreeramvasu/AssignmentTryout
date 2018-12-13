@@ -77,10 +77,7 @@ h1{
       // console.log(`payerID: ${data.payerID}`);
       // console.log(`paymentID: ${data.paymentID}`);
 
-      // NOTE: passing the paymentID and payerID as query parameter since the paypal execute post action 
-      // is not capturing the body - could be a bug
-
-      return actions.request.post(`/my-api/execute-payment?paymentID=${data.paymentID}&payerID=${data.payerID}`, {
+      return actions.request.post(`/my-api/execute-payment`, {
         paymentID: data.paymentID,
         payerID:   data.payerID
       })
