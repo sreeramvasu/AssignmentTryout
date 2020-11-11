@@ -41,6 +41,7 @@ h1{
 }
 </style>
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
  <div class="checkout">
@@ -54,6 +55,10 @@ h1{
     038985<br/>
     Singapore</p>
    </div>
+   <div id="checkBox">
+    <input type="checkbox" id="negativeTest" name="negativeTest" value="false">
+    <label for="negativeTest"> Try negative test </label><br>
+   </div>
    <div id="button"></div>
 </div>
 <script>
@@ -64,10 +69,10 @@ h1{
     payment: function(data, actions) {
       // 2. Make a request to your server
       return actions.request.post('/my-api/create-payment/')
-        .then(function(res) {
-          // 3. Return res.id from the response
-          return res.id;
-        });
+      .then(function(res) {
+        // 3. Return res.id from the response
+        return res.id;
+      });
     },
     // Execute the payment:
     // 1. Add an onAuthorize callback
@@ -77,14 +82,23 @@ h1{
       // console.log(`payerID: ${data.payerID}`);
       // console.log(`paymentID: ${data.paymentID}`);
 
-      return actions.request.post(`/my-api/execute-payment`, {
+      let executePaymentUrl = $('#negativeTest').is(':checked')? '/my-api/execute-payment?negativeTest=true'
+                              : '/my-api/execute-payment?negativeTest=false';
+
+      return actions.request.post(executePaymentUrl, {
         paymentID: data.paymentID,
         payerID:   data.payerID
       })
-        .then(function(res) {
-          // 3. Show the buyer a confirmation message
+      .then(function(res) {
+        // 3. Show the buyer a confirmation message
+        if(res.status === 'failure') {
+          document.querySelector('.checkout')
+          .innerHTML = `<h1>Checkout</h1>
+                        <p><b>Transaction Failed</b></p>
+                        <p>${res.code}: ${res.message}</p>`
+        } else
           window.location.href = `/complete?transactionID=${res.id}`;
-        });
+      });
     }
   }, '#button');
 </script>
