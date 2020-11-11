@@ -12,6 +12,9 @@ This is a Server integration implementation of the paypal button. A sample integ
 - Use the buyer credentials to buy the book - **sreeram.vasudevan-buyer@gmail.com**
 - Try a checkout with Paypal
 
+## Testing the negative case scenario - NEW!
+In order to test the negative case scenario, for `INSTRUMENT_DECLINED`, check the _Try negative test_ option and make a payment using the Paypal button and Paypal credits. Use a business sandbox account, with Negative testing enabled in the settings.
+
 ## Issues encountered
 In the `server.js`, the request body is not captured by the execute-payment in `onAuthorize`, so the **paymentID** and **payerID** are being passed as query parameters instead. This could be an issue with the Paypal button API
 
